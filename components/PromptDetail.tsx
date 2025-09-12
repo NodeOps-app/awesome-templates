@@ -74,11 +74,12 @@ const PromptDetail: React.FC<PromptDetailProps> = ({
       </div>
 
       {/* Right Column - Chat Window */}
-      <div className="lg:col-span-1">
+      <div className="lg:col-span-1 h-full">
         <Chat
           ref={chatRef}
           promptTitle={prompt.title}
           promptContent={prompt.content || prompt.description}
+          promptId={prompt.id}
         />
       </div>
     </div>

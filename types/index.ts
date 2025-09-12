@@ -14,3 +14,29 @@ export interface Category {
   name: string;
   count: number;
 }
+
+export interface OpenAIConfig {
+  apiKey: string;
+  baseURL: string;
+}
+
+export interface ChatMessage {
+  role: "user" | "assistant" | "system";
+  content: string;
+  timestamp: number;
+}
+
+export interface ChatSession {
+  id: string;
+  promptId: number;
+  messages: ChatMessage[];
+  createdAt: number;
+  updatedAt: number;
+}
+
+export interface OpenAIModel {
+  id: string;
+  object: string;
+  created: number;
+  owned_by: string;
+}

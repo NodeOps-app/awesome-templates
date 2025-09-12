@@ -1,4 +1,15 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Awesome Templates - AI Prompt Directory
+
+A Next.js application that provides a directory of AI prompts with an integrated chat interface powered by OpenAI-compatible APIs.
+
+## Features
+
+- **AI Prompt Directory**: Browse and explore various AI prompts organized by categories
+- **Interactive Chat Interface**: Try prompts with real AI models
+- **OpenAI API Integration**: Support for OpenAI and compatible APIs
+- **Model Selection**: Choose from available models from your configured API
+- **Persistent Chat History**: Chat sessions are saved in browser localStorage
+- **Responsive Design**: Works seamlessly on desktop and mobile devices
 
 ## Getting Started
 
@@ -16,7 +27,25 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Configuration
+
+### OpenAI API Setup
+
+1. Click the "Configure" button in the top-right corner of the header
+2. Read and acknowledge the security warning about API key storage
+3. Enter your OpenAI API key and base URL
+4. The default URL is `https://api.openai.com/v1` for OpenAI
+5. For other compatible APIs, enter the appropriate base URL
+6. Click "Save & Test" to verify the configuration
+
+**⚠️ Security Notice**: Your API key will be stored in browser localStorage. Only use this application in trusted environments and never share your API key.
+
+### Using the Chat Interface
+
+1. Navigate to any prompt detail page
+2. Select a model from the dropdown (if not configured, you'll see a message to configure first)
+3. Start chatting with the AI using the selected prompt as context
+4. Chat history is automatically saved and restored when you return to the page
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 

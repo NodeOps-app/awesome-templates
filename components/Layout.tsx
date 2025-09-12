@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import Header from "./Header";
 import CategoryFilter from "./CategoryFilter";
 import { categories } from "../data/mockData";
+import { OpenAIConfig } from "../types";
+import { openaiService } from "../lib/openai";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -22,6 +24,21 @@ const Layout: React.FC<LayoutProps> = ({
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const [openaiConfig, setOpenaiConfig] = useState<OpenAIConfig | null>(null);
+
+  // Load OpenAI configuration on mount
+  useEffect(() => {
+    const savedConfig = localStorage.getItem("openai-config");
+    if (savedConfig) {
+      try {
+        const config = JSON.parse(savedConfig);
+        setOpenaiConfig(config);
+        openaiService.setConfig(config);
+      } catch (e) {
+        console.error("Failed to parse saved OpenAI config:", e);
+      }
+    }
+  }, []);
 
   // Determine the current category based on URL
   const getCurrentCategory = () => {
@@ -43,9 +60,20 @@ const Layout: React.FC<LayoutProps> = ({
     }
   };
 
+  const [configChangeTrigger, setConfigChangeTrigger] = useState(0);
+
+  const handleConfigChange = (config: OpenAIConfig | null) => {
+    setOpenaiConfig(config);
+    setConfigChangeTrigger((prev) => prev + 1);
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Header title={title} showViewAll={showViewAll} />
+      <Header
+        title={title}
+        showViewAll={showViewAll}
+        onConfigChange={handleConfigChange}
+      />
 
       {/* Fixed Sidebar - Only show if showSidebar is true */}
       {showSidebar && (
