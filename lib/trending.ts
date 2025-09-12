@@ -35,6 +35,7 @@ class TrendingService {
 
   /**
    * Generate random trending prompts from all available prompts
+   * Uses deterministic seeding based on current date for consistency
    */
   private generateRandomTrending(allPrompts: Prompt[]): Prompt[] {
     if (allPrompts.length === 0) {
@@ -46,10 +47,29 @@ class TrendingService {
       return [...allPrompts];
     }
 
-    // Create a shuffled copy of all prompts
-    const shuffled = [...allPrompts].sort(() => Math.random() - 0.5);
+    // Use deterministic seeding based on current date
+    // This ensures the same trending prompts are shown for the entire day
+    const today = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
+    const seed = today.split("-").join(""); // Convert to YYYYMMDD for seeding
 
-    // Take the first 9 prompts
+    // Simple seeded random function (same as server-side)
+    const seededRandom = (seed: string) => {
+      let hash = 0;
+      for (let i = 0; i < seed.length; i++) {
+        const char = seed.charCodeAt(i);
+        hash = (hash << 5) - hash + char;
+        hash = hash & hash; // Convert to 32-bit integer
+      }
+      return () => {
+        hash = (hash * 9301 + 49297) % 233280;
+        return hash / 233280;
+      };
+    };
+
+    const random = seededRandom(seed);
+    const shuffled = [...allPrompts].sort(() => random() - 0.5);
+
+    console.log(`🎲 Generated deterministic trending prompts for ${today}`);
     return shuffled.slice(0, this.TRENDING_COUNT);
   }
 

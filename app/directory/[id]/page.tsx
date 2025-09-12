@@ -1,11 +1,13 @@
-"use client";
-
-import React, { useState, useEffect } from "react";
+import React, { Suspense } from "react";
 import { notFound } from "next/navigation";
-import Layout from "../../../components/Layout";
-import PromptDetail from "../../../components/PromptDetail";
-import { getPromptById, getCategories } from "../../../data/mockData";
-import { Prompt, Category } from "../../../types";
+import LayoutWrapper from "../../../components/LayoutWrapper";
+import {
+  getServerPrompts,
+  getServerPromptById,
+  getServerCategories,
+} from "../../../lib/data";
+import { PromptDetailSkeleton } from "../../../components/LoadingSkeletons";
+import PromptDetailWrapper from "../../../components/PromptDetailWrapper";
 
 interface PromptPageProps {
   params: Promise<{
@@ -13,75 +15,36 @@ interface PromptPageProps {
   }>;
 }
 
-const PromptPage = ({ params }: PromptPageProps) => {
-  const resolvedParams = React.use(params);
+// Generate static params for all prompts at build time
+export async function generateStaticParams() {
+  try {
+    const prompts = await getServerPrompts();
+    return prompts.map((prompt) => ({
+      id: prompt.id.toString(),
+    }));
+  } catch (error) {
+    console.error("Error generating static params:", error);
+    return [];
+  }
+}
+
+const PromptPage = async ({ params }: PromptPageProps) => {
+  const resolvedParams = await params;
   const promptId = parseInt(resolvedParams.id);
-  const [prompt, setPrompt] = useState<Prompt | null>(null);
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        setIsLoading(true);
-        const [promptData, categoriesData] = await Promise.all([
-          getPromptById(promptId),
-          getCategories(),
-        ]);
+  // Server-side data fetching
+  const prompt = await getServerPromptById(promptId);
 
-        if (!promptData) {
-          notFound();
-        }
-
-        setPrompt(promptData);
-        setCategories(categoriesData);
-      } catch (err) {
-        console.error("Error loading prompt:", err);
-        setError("Failed to load prompt");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    loadData();
-  }, [promptId]);
-
-  if (isLoading) {
-    return (
-      <Layout title="Prompt of the day" showViewAll={true}>
-        <div className="h-[calc(100vh-4rem)] px-4 sm:px-6 lg:px-8 py-4 overflow-hidden">
-          <div className="text-center py-12">
-            <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-            <p className="text-primary/60 mt-4">Loading prompt...</p>
-          </div>
-        </div>
-      </Layout>
-    );
+  if (!prompt) {
+    notFound();
   }
 
-  if (error || !prompt) {
-    return (
-      <Layout title="Prompt of the day" showViewAll={true}>
-        <div className="h-[calc(100vh-4rem)] px-4 sm:px-6 lg:px-8 py-4 overflow-hidden">
-          <div className="text-center py-12">
-            <p className="text-red-500 text-lg">
-              {error || "Prompt not found"}
-            </p>
-            <button
-              onClick={() => window.location.reload()}
-              className="mt-4 px-4 py-2 bg-primary text-white rounded hover:bg-primary/80"
-            >
-              Retry
-            </button>
-          </div>
-        </div>
-      </Layout>
-    );
-  }
+  // Get proper categories with counts
+  const allPrompts = await getServerPrompts();
+  const categoriesWithCounts = await getServerCategories(allPrompts);
 
   return (
-    <Layout
+    <LayoutWrapper
       title="Prompt of the day"
       showViewAll={true}
       selectedCategory={prompt.category}
@@ -92,11 +55,12 @@ const PromptPage = ({ params }: PromptPageProps) => {
           <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
             <h3 className="text-lg font-semibold mb-4">Categories</h3>
             <div className="flex flex-wrap gap-2">
-              {categories.map((category) => (
+              {categoriesWithCounts.map((category) => (
                 <button
                   key={category.id}
                   className={`px-3 py-2 rounded-lg text-sm transition-colors ${
-                    category.id === prompt.category
+                    category.id ===
+                    prompt.category.toLowerCase().replace(/\s+/g, "-")
                       ? "bg-primary text-white"
                       : "text-primary/70 hover:text-primary hover:bg-primary/10"
                   }`}
@@ -109,10 +73,12 @@ const PromptPage = ({ params }: PromptPageProps) => {
         </div>
 
         <div className="h-full">
-          <PromptDetail prompt={prompt} />
+          <Suspense fallback={<PromptDetailSkeleton />}>
+            <PromptDetailWrapper prompt={prompt} />
+          </Suspense>
         </div>
       </div>
-    </Layout>
+    </LayoutWrapper>
   );
 };
 

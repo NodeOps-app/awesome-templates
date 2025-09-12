@@ -1,9 +1,10 @@
+"use client";
+
 import React, { useState } from "react";
 import Link from "next/link";
 import { Gear, Eye } from "@phosphor-icons/react";
 import OpenAIConfigModal from "./OpenAIConfigModal";
 import { OpenAIConfig } from "../types";
-import { openaiService } from "../lib/openai";
 
 interface HeaderProps {
   title: string;

@@ -5,7 +5,7 @@ import React, {
   useEffect,
 } from "react";
 import { PaperPlaneTilt, Spinner, WarningCircle } from "@phosphor-icons/react";
-import { ChatMessage, OpenAIConfig } from "../types";
+import { ChatMessage } from "../types";
 import { openaiService } from "../lib/openai";
 import ModelSelector from "./ModelSelector";
 import { MarkdownRenderer } from "../lib/markdown";
@@ -138,7 +138,7 @@ const Chat = forwardRef<ChatRef, ChatProps>(
 
           setChatHistory((prev) => [...prev, assistantMessage]);
           setStreamingResponse("");
-        } catch (streamError) {
+        } catch {
           console.log(
             "Streaming not supported, falling back to regular request"
           );
@@ -227,7 +227,7 @@ const Chat = forwardRef<ChatRef, ChatProps>(
               </p>
               {promptContent && (
                 <p className="text-xs mt-1">
-                  Click "Try Prompt" to use the suggested prompt
+                  Click &quot;Try Prompt&quot; to use the suggested prompt
                 </p>
               )}
             </div>

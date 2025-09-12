@@ -1,6 +1,8 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 import { X, Check, WarningCircle } from "@phosphor-icons/react";
-import { OpenAIConfig, OpenAIModel } from "../types";
+import { OpenAIConfig } from "../types";
 import { openaiService } from "../lib/openai";
 
 interface OpenAIConfigModalProps {
