@@ -7,6 +7,9 @@ export interface Prompt {
   content?: string;
   createdAt?: string;
   updatedAt?: string;
+  prompt?: string;
+  promptType?: "user" | "system";
+  tags?: string;
 }
 
 export interface Category {

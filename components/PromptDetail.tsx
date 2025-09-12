@@ -16,7 +16,9 @@ const PromptDetail: React.FC<PromptDetailProps> = ({
   const chatRef = useRef<ChatRef>(null);
 
   const handleCopyPrompt = () => {
-    navigator.clipboard.writeText(prompt.content || prompt.description);
+    navigator.clipboard.writeText(
+      prompt.prompt || prompt.content || prompt.description
+    );
     toast.success("Prompt copied!!");
   };
 
@@ -53,9 +55,9 @@ const PromptDetail: React.FC<PromptDetailProps> = ({
             </div>
           </div>
           <div className="bg-primary/5 border border-primary/10 p-4 flex-1">
-            <p className="text-primary/80 leading-relaxed">
-              {prompt.content || prompt.description}
-            </p>
+            <pre className="text-primary/80 leading-relaxed whitespace-pre-wrap font-sans">
+              {prompt.prompt || prompt.content || prompt.description}
+            </pre>
           </div>
           <div className="mt-4">
             <h3 className="font-semibold mb-2">Skills</h3>
@@ -78,7 +80,7 @@ const PromptDetail: React.FC<PromptDetailProps> = ({
         <Chat
           ref={chatRef}
           promptTitle={prompt.title}
-          promptContent={prompt.content || prompt.description}
+          promptContent={prompt.prompt || prompt.content || prompt.description}
           promptId={prompt.id}
         />
       </div>

@@ -103,7 +103,21 @@ const Chat = forwardRef<ChatRef, ChatProps>(
       setError(null);
 
       try {
-        const systemPrompt = `You are a ${promptTitle}. ${promptContent || ""}`;
+        // Determine system prompt based on promptType
+        let systemPrompt = "";
+        if (promptContent) {
+          // Check if this is a system prompt or user prompt
+          const isSystemPrompt =
+            promptContent.includes("You are") ||
+            promptContent.includes("Act as");
+          if (isSystemPrompt) {
+            systemPrompt = promptContent;
+          } else {
+            systemPrompt = `You are a ${promptTitle}. ${promptContent}`;
+          }
+        } else {
+          systemPrompt = `You are a ${promptTitle}.`;
+        }
 
         // Try streaming first, fallback to regular if not supported
         try {
