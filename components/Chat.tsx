@@ -3,6 +3,7 @@ import React, {
   useImperativeHandle,
   forwardRef,
   useEffect,
+  useRef,
 } from "react";
 import { PaperPlaneTilt, Spinner, WarningCircle } from "@phosphor-icons/react";
 import { ChatMessage } from "../types";
@@ -35,6 +36,7 @@ const Chat = forwardRef<ChatRef, ChatProps>(
     const [refreshTrigger, setRefreshTrigger] = useState(0);
     const [streamingResponse, setStreamingResponse] = useState("");
     const [isStreaming, setIsStreaming] = useState(false);
+    const chatHistoryRef = useRef<HTMLDivElement>(null);
 
     // Load chat history from localStorage on mount
     useEffect(() => {
@@ -55,6 +57,13 @@ const Chat = forwardRef<ChatRef, ChatProps>(
         localStorage.setItem(`chat-${promptId}`, JSON.stringify(chatHistory));
       }
     }, [chatHistory, promptId]);
+
+    // Auto-scroll to bottom when new messages are added or streaming updates
+    useEffect(() => {
+      if (chatHistoryRef.current) {
+        chatHistoryRef.current.scrollTop = chatHistoryRef.current.scrollHeight;
+      }
+    }, [chatHistory, streamingResponse, isStreaming]);
 
     // Trigger model refresh when OpenAI is configured
     useEffect(() => {
@@ -219,7 +228,10 @@ const Chat = forwardRef<ChatRef, ChatProps>(
         )}
 
         {/* Chat History */}
-        <div className="flex-1 overflow-y-auto mb-4 space-y-3 min-h-0 max-h-80 scrollbar-thin scrollbar-thumb-primary/20 scrollbar-track-transparent">
+        <div
+          ref={chatHistoryRef}
+          className="flex-1 overflow-y-auto mb-4 space-y-3 min-h-0 max-h-80 scrollbar-thin scrollbar-thumb-primary/20 scrollbar-track-transparent"
+        >
           {chatHistory.length === 0 ? (
             <div className="text-center text-primary/60 py-8">
               <p className="text-sm">

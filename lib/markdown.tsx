@@ -1,4 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
+import { Copy, Check } from "@phosphor-icons/react";
+
+// Code block component with copy functionality
+function CodeBlock({
+  content,
+  language,
+  key,
+}: {
+  content: string;
+  language: string;
+  key: string | number;
+}) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(content);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error("Failed to copy code:", err);
+    }
+  };
+
+  return (
+    <div key={key} className="relative group my-2">
+      <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto">
+        <code className={`language-${language}`}>{content}</code>
+      </pre>
+      <button
+        onClick={handleCopy}
+        className="absolute top-2 right-2 p-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded transition-colors opacity-0 group-hover:opacity-100"
+        title="Copy code"
+      >
+        {copied ? (
+          <Check className="w-4 h-4 text-green-600" />
+        ) : (
+          <Copy className="w-4 h-4" />
+        )}
+      </button>
+    </div>
+  );
+}
 
 // Simple markdown renderer without external dependencies
 export function MarkdownRenderer({ content }: { content: string }) {
@@ -17,14 +60,11 @@ export function MarkdownRenderer({ content }: { content: string }) {
       if (inCodeBlock) {
         // End of code block
         elements.push(
-          <pre
+          <CodeBlock
             key={i}
-            className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto my-2"
-          >
-            <code className={`language-${codeBlockLanguage}`}>
-              {codeBlockContent.join("\n")}
-            </code>
-          </pre>
+            content={codeBlockContent.join("\n")}
+            language={codeBlockLanguage}
+          />
         );
         inCodeBlock = false;
         codeBlockContent = [];
@@ -147,14 +187,11 @@ export function MarkdownRenderer({ content }: { content: string }) {
   // Handle any remaining code block
   if (inCodeBlock && codeBlockContent.length > 0) {
     elements.push(
-      <pre
+      <CodeBlock
         key="final-code"
-        className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto my-2"
-      >
-        <code className={`language-${codeBlockLanguage}`}>
-          {codeBlockContent.join("\n")}
-        </code>
-      </pre>
+        content={codeBlockContent.join("\n")}
+        language={codeBlockLanguage}
+      />
     );
   }
 
