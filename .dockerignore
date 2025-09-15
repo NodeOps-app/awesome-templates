@@ -16,9 +16,14 @@
 **/compose*
 **/Dockerfile*
 **/node_modules
+**/.next
 **/npm-debug.log
 **/obj
 **/secrets.dev.yaml
 **/values.dev.yaml
 LICENSE
 README.md
+.cursor
+.devcontainer
+prompts
+output.json

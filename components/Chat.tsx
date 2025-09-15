@@ -230,7 +230,7 @@ const Chat = forwardRef<ChatRef, ChatProps>(
         {/* Chat History */}
         <div
           ref={chatHistoryRef}
-          className="flex-1 overflow-y-auto mb-4 space-y-3 min-h-0 max-h-80 scrollbar-thin scrollbar-thumb-primary/20 scrollbar-track-transparent"
+          className="flex-1 overflow-y-auto mb-4 space-y-3 min-h-[70vh] max-h-80 scrollbar-thin scrollbar-thumb-primary/20 scrollbar-track-transparent"
         >
           {chatHistory.length === 0 ? (
             <div className="text-center text-primary/60 py-8">
