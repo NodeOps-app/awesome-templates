@@ -46,6 +46,7 @@ jobs:
           images: nodeops/awesome-prompts
           tags: |
             type=raw,value=${{ steps.timestamp.outputs.git_short_sha }}-${{ steps.timestamp.outputs.timestamp }}
+            type=raw,value=v1
 
       - name: Build and push
         if: ${{ contains('main pre-mainnet-v01 pre-mainnet-01-bin-changes', github.ref_name) }}
