@@ -43,7 +43,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: nodeops/awesome-templates
+          images: nodeops/awesome-prompts
           tags: |
             type=raw,value=${{ steps.timestamp.outputs.git_short_sha }}-${{ steps.timestamp.outputs.timestamp }}
 
