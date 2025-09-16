@@ -90,7 +90,7 @@ export default function PromptDetailWrapper({
       </div>
 
       {/* Right Column - Chat Window */}
-      <div className="lg:col-span-1 h-full">
+      <div className="lg:col-span-1" style={{ height: "calc(100vh - 100px)" }}>
         <Chat
           ref={chatRef}
           promptTitle={prompt.title}
