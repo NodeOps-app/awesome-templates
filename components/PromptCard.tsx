@@ -21,6 +21,11 @@ const PromptCard: React.FC<PromptCardProps> = memo(
             </p>
           </div>
           <h3 className="font-semibold mb-2">{prompt.title}</h3>
+          <div className="mb-2">
+            <span className="inline-block px-2 py-1 bg-primary/10 text-primary/70 text-xs border border-primary/20 rounded">
+              {prompt.category}
+            </span>
+          </div>
           <div className="flex items-center gap-2 text-xs text-primary/50">
             <span>{prompt.skills[0]}</span>
             <span>{prompt.skills[1]}</span>

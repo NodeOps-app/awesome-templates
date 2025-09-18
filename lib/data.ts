@@ -22,6 +22,14 @@ export async function getServerPrompts(): Promise<Prompt[]> {
     const remotePrompts: any[] = await response.json();
     console.log(`✅ Fetched ${remotePrompts.length} prompts on server`);
 
+    // Log sample of remote data to debug categories
+    console.log(
+      "🔍 Sample remote prompt categories:",
+      remotePrompts
+        .slice(0, 5)
+        .map((p) => ({ title: p.title, category: p.category }))
+    );
+
     // Transform remote prompts to our format
     const prompts: Prompt[] = remotePrompts.map(
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -35,7 +43,9 @@ export async function getServerPrompts(): Promise<Prompt[]> {
             : [];
 
         const category =
-          remotePrompt.category && remotePrompt.category !== "null"
+          remotePrompt.category &&
+          remotePrompt.category !== "null" &&
+          remotePrompt.category !== null
             ? remotePrompt.category
             : "General";
 
@@ -71,14 +81,11 @@ export async function getServerCategories(
     categoryMap.set(prompt.category, count + 1);
   });
 
-  return [
-    { id: "all", name: "All", count: prompts.length },
-    ...Array.from(categoryMap.entries()).map(([name, count]) => ({
-      id: name.toLowerCase().replace(/\s+/g, "-"),
-      name,
-      count,
-    })),
-  ];
+  return Array.from(categoryMap.entries()).map(([name, count]) => ({
+    id: name.toLowerCase().replace(/\s+/g, "-"),
+    name,
+    count,
+  }));
 }
 
 export async function getServerPromptById(id: number): Promise<Prompt | null> {
@@ -117,6 +124,11 @@ export async function getServerTrendingPrompts(
   const random = seededRandom(seed);
   const shuffled = [...prompts].sort(() => random() - 0.5);
 
+  const selectedPrompts = shuffled.slice(0, 9);
   console.log(`🎲 Generated deterministic trending prompts for ${today}`);
-  return shuffled.slice(0, 9);
+  console.log(
+    "📊 Server trending prompt categories:",
+    selectedPrompts.map((p) => p.category)
+  );
+  return selectedPrompts;
 }

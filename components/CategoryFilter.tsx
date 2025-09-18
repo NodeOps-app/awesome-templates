@@ -6,6 +6,7 @@ interface CategoryFilterProps {
   categories: Category[];
   selectedCategory: string;
   onCategoryChange: (categoryId: string) => void;
+  totalCount?: number;
   className?: string;
 }
 
@@ -13,6 +14,7 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
   categories,
   selectedCategory,
   onCategoryChange,
+  totalCount = 0,
   className = "",
 }) => {
   return (
@@ -23,6 +25,24 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
         <h3 className="text-lg font-semibold">Categories</h3>
       </div>
       <div className="space-y-2">
+        {/* All Categories Option */}
+        <button
+          onClick={() => onCategoryChange("all")}
+          className={`w-full text-left px-3 py-2 transition-colors cursor-pointer ${
+            selectedCategory === "all"
+              ? "bg-primary/10 text-white"
+              : "text-gray-400 hover:text-white hover:bg-primary/5"
+          }`}
+        >
+          <div className="flex justify-between items-center">
+            <div className="flex items-center gap-2">
+              <Hash className="w-4 h-4" />
+              <span>All</span>
+            </div>
+            <span className="text-xs text-gray-500">({totalCount})</span>
+          </div>
+        </button>
+
         {categories.map((category) => (
           <button
             key={category.id}

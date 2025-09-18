@@ -42,7 +42,11 @@ export default function PromptDetailWrapper({
       <div className="space-y-4">
         <div>
           <h1 className="text-2xl font-semibold mb-2">{prompt.title}</h1>
-          <p className="text-primary/60 text-sm mb-4">{prompt.category}</p>
+          <div className="mb-4">
+            <span className="inline-block px-2 py-1 bg-primary/10 text-primary/70 text-xs border border-primary/20 rounded">
+              {prompt.category}
+            </span>
+          </div>
           <div className="flex gap-2 mb-4">
             <button
               onClick={() => {
@@ -95,6 +99,7 @@ export default function PromptDetailWrapper({
           ref={chatRef}
           promptTitle={prompt.title}
           promptContent={prompt.prompt || prompt.content || prompt.description}
+          promptCategory={prompt.category}
           promptId={prompt.id}
         />
       </div>

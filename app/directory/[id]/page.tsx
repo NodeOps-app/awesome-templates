@@ -45,8 +45,9 @@ const PromptPage = async ({ params }: PromptPageProps) => {
 
   return (
     <LayoutWrapper
-      title="Prompt of the day"
+      title="Awesome prompts"
       showViewAll={true}
+      showSidebar={false}
       selectedCategory={prompt.category}
     >
       <div className="h-[calc(100vh-4rem)] px-4 sm:px-6 lg:px-8 py-4 overflow-hidden">

@@ -14,6 +14,7 @@ import { MarkdownRenderer } from "../lib/markdown";
 interface ChatProps {
   promptTitle: string;
   promptContent?: string;
+  promptCategory?: string;
   onTryPrompt?: () => void;
   className?: string;
   promptId: number;
@@ -25,7 +26,14 @@ export interface ChatRef {
 
 const Chat = forwardRef<ChatRef, ChatProps>(
   (
-    { promptTitle, promptContent, onTryPrompt, className = "", promptId },
+    {
+      promptTitle,
+      promptContent,
+      promptCategory,
+      onTryPrompt,
+      className = "",
+      promptId,
+    },
     ref
   ) => {
     const [chatMessage, setChatMessage] = useState("");
@@ -198,6 +206,13 @@ const Chat = forwardRef<ChatRef, ChatProps>(
               Using:{" "}
               <span className="font-medium text-primary">{promptTitle}</span>
             </p>
+            {promptCategory && (
+              <div className="mt-1">
+                <span className="inline-block px-2 py-1 bg-primary/10 text-primary/70 text-xs border border-primary/20 rounded">
+                  {promptCategory}
+                </span>
+              </div>
+            )}
           </div>
           {chatHistory.length > 0 && (
             <button

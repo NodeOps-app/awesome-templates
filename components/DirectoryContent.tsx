@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import SearchBar from "./SearchBar";
 import PromptGrid from "./PromptGrid";
 import { Prompt, Category } from "../types";
@@ -20,6 +21,22 @@ export default function DirectoryContent({
   const [selectedCategory, setSelectedCategory] = useState(
     initialSelectedCategory
   );
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  // Sync with URL parameters
+  useEffect(() => {
+    const categoryFromUrl = searchParams.get("category") || "all";
+    setSelectedCategory(categoryFromUrl);
+  }, [searchParams]);
+
+  const handleCategoryChange = (categoryId: string) => {
+    if (categoryId === "all") {
+      router.push("/directory");
+    } else {
+      router.push(`/directory?category=${categoryId}`);
+    }
+  };
 
   const filteredPrompts = useMemo(() => {
     let filtered = prompts;
@@ -54,10 +71,20 @@ export default function DirectoryContent({
         <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
           <h3 className="text-lg font-semibold mb-4">Categories</h3>
           <div className="flex flex-wrap gap-2">
+            <button
+              onClick={() => handleCategoryChange("all")}
+              className={`px-3 py-2 rounded-lg text-sm transition-colors ${
+                selectedCategory === "all"
+                  ? "bg-primary text-white"
+                  : "text-primary/70 hover:text-primary hover:bg-primary/10"
+              }`}
+            >
+              All ({prompts.length})
+            </button>
             {categories.map((category) => (
               <button
                 key={category.id}
-                onClick={() => setSelectedCategory(category.id)}
+                onClick={() => handleCategoryChange(category.id)}
                 className={`px-3 py-2 rounded-lg text-sm transition-colors ${
                   selectedCategory === category.id
                     ? "bg-primary text-white"

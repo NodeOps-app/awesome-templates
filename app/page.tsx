@@ -14,16 +14,16 @@ const HomePage = async () => {
 
   return (
     <LayoutWrapper
-      title="Prompt of the day"
+      title="Awesome prompts"
       showViewAll={true}
       showSidebar={false}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Prompt Engine Section */}
+        {/* Awesome Prompts Section */}
         <section className="mb-12 flex flex-col items-center mt-8">
-          <h1 className="text-4xl font-semibold">Prompt Engine</h1>
+          <h1 className="text-4xl font-semibold">Awesome prompts</h1>
           <p className="text-primary/40 text-sm mt-2">
-            Prompt Engine is a directory of prompts for various AI tools.
+            Awesome prompts is a directory of prompts for various AI tools.
           </p>
           <Link
             href="/directory"

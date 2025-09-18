@@ -4,8 +4,7 @@ import React, { useEffect } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import Header from "./Header";
 import CategoryFilter from "./CategoryFilter";
-import { categories } from "../data/mockData";
-import { OpenAIConfig } from "../types";
+import { OpenAIConfig, Category } from "../types";
 import { openaiService } from "../lib/openai";
 
 interface LayoutProps {
@@ -14,6 +13,8 @@ interface LayoutProps {
   showViewAll?: boolean;
   selectedCategory?: string;
   showSidebar?: boolean;
+  categories?: Category[];
+  totalCount?: number;
 }
 
 const Layout: React.FC<LayoutProps> = ({
@@ -22,6 +23,8 @@ const Layout: React.FC<LayoutProps> = ({
   showViewAll = false,
   selectedCategory = "all",
   showSidebar = true,
+  categories = [],
+  totalCount = 0,
 }) => {
   const router = useRouter();
   const pathname = usePathname();
@@ -73,11 +76,12 @@ const Layout: React.FC<LayoutProps> = ({
       />
 
       {/* Fixed Sidebar - Only show if showSidebar is true */}
-      {showSidebar && (
+      {showSidebar && categories.length > 0 && (
         <CategoryFilter
           categories={categories}
           selectedCategory={currentCategory}
           onCategoryChange={handleCategoryChange}
+          totalCount={totalCount}
         />
       )}
 

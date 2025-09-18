@@ -7,7 +7,7 @@ interface TrendingCache {
 }
 
 class TrendingService {
-  private readonly CACHE_KEY = "trending_prompts";
+  private readonly CACHE_KEY = "trending_prompts_v2"; // Updated cache key to force refresh
   private readonly CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
   private readonly TRENDING_COUNT = 9;
 
@@ -69,8 +69,13 @@ class TrendingService {
     const random = seededRandom(seed);
     const shuffled = [...allPrompts].sort(() => random() - 0.5);
 
+    const selectedPrompts = shuffled.slice(0, this.TRENDING_COUNT);
     console.log(`🎲 Generated deterministic trending prompts for ${today}`);
-    return shuffled.slice(0, this.TRENDING_COUNT);
+    console.log(
+      "📊 Trending prompt categories:",
+      selectedPrompts.map((p) => p.category)
+    );
+    return selectedPrompts;
   }
 
   /**

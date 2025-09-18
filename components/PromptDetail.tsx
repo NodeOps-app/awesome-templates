@@ -36,7 +36,14 @@ const PromptDetail: React.FC<PromptDetailProps> = ({
       <div className="lg:col-span-1">
         <div className="border border-primary/20 p-6 h-full flex flex-col">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold">Prompt Content</h2>
+            <div>
+              <h2 className="text-xl font-semibold">Prompt Content</h2>
+              <div className="mt-1">
+                <span className="inline-block px-2 py-1 bg-primary/10 text-primary/70 text-xs border border-primary/20 rounded">
+                  {prompt.category}
+                </span>
+              </div>
+            </div>
             <div className="flex gap-2">
               <button
                 onClick={handleCopyPrompt}
@@ -81,6 +88,7 @@ const PromptDetail: React.FC<PromptDetailProps> = ({
           ref={chatRef}
           promptTitle={prompt.title}
           promptContent={prompt.prompt || prompt.content || prompt.description}
+          promptCategory={prompt.category}
           promptId={prompt.id}
         />
       </div>

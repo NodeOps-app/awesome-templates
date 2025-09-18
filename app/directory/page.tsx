@@ -20,9 +20,11 @@ const DirectoryPage = async ({ searchParams }: DirectoryPageProps) => {
 
   return (
     <LayoutWrapper
-      title="Prompt of the day"
+      title="Awesome prompts"
       showViewAll={false}
       selectedCategory={selectedCategory}
+      categories={categoriesWithCounts}
+      totalCount={prompts.length}
     >
       <Suspense fallback={<DirectoryPageSkeleton />}>
         <DirectoryContent
