@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Awesome prompts",
+  title: "Awesome projects",
   description: "A directory of awesome prompts for various AI tools",
 };
 
