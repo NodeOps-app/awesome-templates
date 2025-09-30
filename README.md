@@ -1,4 +1,4 @@
-# Awesome Templates - AI Prompt Directory
+# AI Prompt Directory with Chat Interface
 
 A Next.js application that provides a directory of AI prompts with an integrated chat interface powered by OpenAI-compatible APIs.
 
@@ -10,6 +10,30 @@ A Next.js application that provides a directory of AI prompts with an integrated
 - **Model Selection**: Choose from available models from your configured API
 - **Persistent Chat History**: Chat sessions are saved in browser localStorage
 - **Responsive Design**: Works seamlessly on desktop and mobile devices
+- **TypeScript Support**: Full TypeScript integration for type safety
+- **Next.js App Router**: Built with Next.js App Router for modern routing
+
+## Project Structure
+
+```
+app/                 # Next.js App Router pages
+├── layout.tsx       # Root layout
+├── page.tsx         # Home page
+├── api/trending/    # API routes
+└── directory/       # Directory pages
+    ├── page.tsx     # Directory listing
+    └── [id]/page.tsx # Prompt detail page
+components/          # Reusable React components
+├── Header.tsx       # Header component
+├── PromptGrid.tsx   # Grid of prompts
+├── PromptCard.tsx   # Individual prompt card
+├── Chat.tsx         # Chat interface component
+└── ...              # Other components
+lib/                 # Utility functions and libraries
+└── openai.ts        # OpenAI API integration
+prompts/             # AI prompt files
+└── Act as a ...     # Individual prompt files
+```
 
 ## Getting Started
 
@@ -47,9 +71,15 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 3. Start chatting with the AI using the selected prompt as context
 4. Chat history is automatically saved and restored when you return to the page
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
 ## Learn More
+
+This project uses:
+- [Next.js](https://nextjs.org/) App Router
+- [TypeScript](https://www.typescriptlang.org/)
+- [Tailwind CSS](https://tailwindcss.com/) for styling
+- [Shadcn UI](https://ui.shadcn.com/) components
+- [React Hook Form](https://react-hook-form.com/) for form handling
+- [Zod](https://zod.dev/) for validation
 
 To learn more about Next.js, take a look at the following resources:
 

@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Awesome projects",
-  description: "A directory of awesome prompts for various AI tools",
+  description: "A directory of git push test for various AI tools",
 };
 
 export default function RootLayout({

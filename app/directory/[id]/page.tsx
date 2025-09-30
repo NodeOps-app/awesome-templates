@@ -45,7 +45,7 @@ const PromptPage = async ({ params }: PromptPageProps) => {
 
   return (
     <LayoutWrapper
-      title="Awesome prompts"
+      title="git push test"
       showViewAll={true}
       showSidebar={false}
       selectedCategory={prompt.category}

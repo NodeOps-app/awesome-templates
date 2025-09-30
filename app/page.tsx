@@ -14,16 +14,16 @@ const HomePage = async () => {
 
   return (
     <LayoutWrapper
-      title="Awesome prompts"
+      title="git push test"
       showViewAll={true}
       showSidebar={false}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Awesome Prompts Section */}
+        {/* git push test Section */}
         <section className="mb-12 flex flex-col items-center mt-8">
-          <h1 className="text-4xl font-semibold">Awesome prompts</h1>
+          <h1 className="text-4xl font-semibold">git push test</h1>
           <p className="text-primary/40 text-sm mt-2">
-            Awesome prompts is a directory of prompts for various AI tools.
+            git push test is a directory of prompts for various AI tools.
           </p>
           <Link
             href="/directory"

@@ -20,7 +20,7 @@ const DirectoryPage = async ({ searchParams }: DirectoryPageProps) => {
 
   return (
     <LayoutWrapper
-      title="Awesome prompts"
+      title="git push test"
       showViewAll={false}
       selectedCategory={selectedCategory}
       categories={categoriesWithCounts}
