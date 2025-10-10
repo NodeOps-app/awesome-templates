@@ -14,16 +14,16 @@ const HomePage = async () => {
 
   return (
     <LayoutWrapper
-      title="awesome templates"
+      title="awesome promptss"
       showViewAll={true}
       showSidebar={false}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* awesome templates Section */}
+        {/* awesome promptss Section */}
         <section className="mb-12 flex flex-col items-center mt-8">
-          <h1 className="text-4xl font-semibold">awesome templates</h1>
+          <h1 className="text-4xl font-semibold">awesome promptss</h1>
           <p className="text-primary/40 text-sm mt-2">
-            awesome templates is a directory of prompts for various AI tools.
+            awesome promptss is a directory of prompts for various AI tools.
           </p>
           <Link
             href="/directory"

@@ -45,7 +45,7 @@ const PromptPage = async ({ params }: PromptPageProps) => {
 
   return (
     <LayoutWrapper
-      title="awesome templates"
+      title="awesome promptss"
       showViewAll={true}
       showSidebar={false}
       selectedCategory={prompt.category}

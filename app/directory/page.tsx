@@ -20,7 +20,7 @@ const DirectoryPage = async ({ searchParams }: DirectoryPageProps) => {
 
   return (
     <LayoutWrapper
-      title="awesome templates"
+      title="awesome promptss"
       showViewAll={false}
       selectedCategory={selectedCategory}
       categories={categoriesWithCounts}
